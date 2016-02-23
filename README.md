@@ -1,6 +1,6 @@
 # EECS268-Programming-II
 
-Projects in EECS 268: Programming II at the University of Kansas. 
+Projects in EECS 268: Programming II at the University of Kansas. (Spring 2015)
 
 Course Objectives: to develop fundamental computer-based problem solving skills in the following three areas:
 
@@ -8,4 +8,4 @@ Course Objectives: to develop fundamental computer-based problem solving skills 
 
 - Object Oriented Programming : The syntax, semantics, and use of the basic features of a typical object oriented programming language (e.g. C++).
 
--Algorithms and Data Structures : Advanced methods for storing and manipulating data to effectively solve complex problems (e.g. linked lists, stacks, queues, trees, graphs, hash tables, searching, and sorting). 
+- Algorithms and Data Structures : Advanced methods for storing and manipulating data to effectively solve complex problems (e.g. linked lists, stacks, queues, trees, graphs, hash tables, searching, and sorting). 
