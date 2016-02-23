@@ -1,0 +1,77 @@
+/**
+*	@file : NumberFileDriver.cpp
+*	@author : Vuong Nguyen
+*	@date : 2015.04.08
+*	Purpose: Implement file of Numberfile Driver class
+*/
+
+
+#include "NumberFileDriver.h"
+#include <iostream>
+#include <string>
+#include "NumberFileGenerator.h"
+
+void NumberFileDriver::run(int argc, char** argv)
+{
+	if(isValidOption(argv[2]))
+	{
+
+		if((string)argv[2] == "-a")
+		{
+			NumberFileGenerator::ascending(argv[3], argv[4]);
+		}
+		else if((string)argv[2] == "-d")
+		{
+			NumberFileGenerator::descending(argv[3], argv[4]);
+		}
+		else if((string)argv[2] == "-s")
+		{
+			NumberFileGenerator::singleValue(argv[3], argv[4], argv[5]);
+		}
+		else if((string)argv[2] == "-r")
+		{
+			NumberFileGenerator::random(argv[3], argv[4], argv[5], argv[6]);
+		}
+		else
+			printHelpMenu();
+		
+	}
+}
+
+void NumberFileDriver::printHelpMenu()
+{
+	std::cout << "\nUse Number File Generator in one of the following ways:\n\n"
+			<< "./prog -create -a filename amount\n"
+			<< "./prog -create -d filename amount\n"
+			<< "./prog -create -s filename amount value\n"
+			<< "./prog -create -r filename amount min max\n"
+			<< "Option explainations:\n"
+			<< "\t-a for ascending\n"
+			<< "\t-d for descending\n"
+			<< "\t-s for a single value\n"
+			<< "\t-r for random values\n"
+			<< "\tfilename is the ouput file name\n"
+			<< "\tamount is the amount of random numbers to place in the file\n"
+			<< "\tvalue is the single number that will be written to file in -s mode\n"
+			<< "\tmin is the low end of the range of random numbers\n"
+			<< "\tmax is the high end (non-inclusive) of the range of random numbers\n";
+
+}
+ 
+bool NumberFileDriver::isValidOption(std::string option)
+{
+	if(option == "-a" || option == "-d" || option == "-s" ||option == "-r")
+	{
+		return true;
+	}
+	else
+		printHelpMenu();
+}
+
+
+
+
+
+
+
+

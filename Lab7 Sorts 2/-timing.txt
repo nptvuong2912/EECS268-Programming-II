@@ -1,0 +1,6 @@
+Bubble Sort sort 50 numbers in 1.079e-05 seconds
+Selection Sort sort 50 numbers in 6.41e-06 seconds
+Insertion Sort sort 50 numbers in 5.571e-06 seconds
+Quick Sort sort 50 numbers in 1.5216e-05 seconds
+Quick Sort with Median sort 50 numbers in 1.3274e-05 seconds
+Merge Sort sort 50 numbers in 1.0698e-05 seconds

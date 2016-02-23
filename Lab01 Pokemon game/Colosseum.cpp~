@@ -1,0 +1,155 @@
+#include "Colosseum.h"
+#include <iostream>
+#include <string>
+
+Colosseum::Colosseum()
+{
+	d20 = Dice(20); //Create the dices with different sizes
+	d6 = Dice(6);
+	d2 = Dice(2);
+
+}
+
+void Colosseum::userBuild(Pokemon& p)
+{
+	std::string tempName;
+	int tempHp;
+	int tempAttack, tempDefense; //Temp variables
+
+	std::cout<<"PLease name your pokemon: ";
+	std::cin>> tempName; //Gets name from the user
+	while ((tempName.length() < 1))
+	{
+		std::cout<< "Your name must be at least 1 character long: ";
+		std::cin>> tempName;
+	}
+	std::cout<<" \n";
+	p.setName(tempName); //Input name with set method
+
+	std::cout<<"How many hit points will it have? (1-50): ";
+	std::cin>> tempHp; //Gets hp from the user
+	while (tempHp > 50 || tempHp <= 0) //Keeps asking to have valid input for hp
+	{
+		std::cout<<"The hit points must be in between 1 and 50. Please input another value: ";
+		std::cin>> tempHp;
+	}
+	p.setHp(tempHp); //Gets input of hp from the user.
+	std::cout<< " \n";
+
+	std::cout<<"Split fifty points between attack level and defense level" << "\n";
+	std::cout<<"Enter your attack level (1-49): ";
+	std::cin>> tempAttack; //Gets attackLevel from the user
+	while (tempAttack > 49  || tempAttack <= 0)
+	{
+		std::cout<<"The attack level must be in between 1 and 49. Please input another value: ";
+		std::cin>> tempAttack;
+	} //Keep asking to have valid input
+
+	p.setAttack(tempAttack); //sets the valid input by set method.
+	std::cout<<" \n";
+
+	std::cout<<"Enter your defense level (1-" << (50 - tempAttack) << "): ";
+	std::cin>> tempDefense;
+	while (tempDefense > (50 - tempAttack)  || tempDefense <= 0)
+	{
+		std::cout<<"The defense level must be in between 1 and " << (50 - tempAttack) << ". Please input another value: ";
+		std::cin>> tempDefense;
+	}
+	p.setDefense(tempDefense); //Gets the valid defense level from the user such that the attackLevel plus defenseLevel equals to 50.
+	
+}
+
+
+bool Colosseum::attack(const Pokemon& attacker, Pokemon& defender)
+{
+	int attackBonus = d20.roll(); //Rolls dice of 20 to get attackBonus and defenseBonus
+	int defenseBonus = d20.roll();
+
+	std::cout<< attacker.getName() << " is attacking " << defender.getName() << "\n";
+	std::cout<< attacker.getName() << " rolls an attack bonus of " << attackBonus << "\n";
+	std::cout<< defender.getName() << " rolls a defense bonus of " << defenseBonus << "\n";
+	//display the results to the user
+
+	if ((attacker.getAttack() + attackBonus) > (defender.getDefense() + defenseBonus)) //Attack hits - condition
+	{ 
+		int damage1 = d6.roll();
+		int damage2 = d6.roll();
+		int damage3 = d6.roll();
+		int damage = damage1 + damage2 +damage3; //Total damage by adding three radom rolls of dice6
+
+		std::cout<< "The attack hits dealing 3-D6 damage!" << "\n";
+		std::cout<< "The rolls are " << damage1 << ", " << damage2 << ", and " << damage3 << " totaling: " << damage << " damage!" << "\n";
+
+		defender.reduceHp(damage); //reduces the hp by the damage
+
+		if (defender.getHp() <= 0)
+		{
+			std::cout << "\n" << defender.getName() << " have been defeated!" << "\n";
+			return true;
+			//return true if the defender died
+		}  
+		else 
+		{
+			std::cout<< defender.getName() << " has " << defender.getHp() << " hits points left." << "\n";
+			return false;
+			//false if the defender is  still alive and display the remaining hp
+		}
+	}
+	else //Attack missed
+	{
+		std::cout<< "The attack is missed!" << "\n";
+		return false;
+	}
+}
+	
+void Colosseum::play(Pokemon& p1, Pokemon& p2)
+{
+	int round = 1;
+	std::cout << "Choosing which player to go first: " << "\n";
+	int d = d2.roll(); //Rolls d2 to decide who goes first
+
+	if (d == 1) //PLayer 1 goes first
+	{
+		std::cout<< "Player 1 will go first." << "\n";
+	}
+	else //Player 2 goes first
+	{
+		std::cout<< "Player 2 will go first." << "\n";
+	}
+	while (round <= 10) //Limits the amount of round to 10
+	{
+		std::cout<< "\n"<<"Round " << round << "!" << "\n\n"; //Display the round number
+		if (d == 1) //Player 1 goes first
+		{
+			if (attack(p1, p2))
+			{
+				return; //stops the fight if one pokemon died
+			}
+			if (attack(p2, p1))
+			{
+				return;
+			}
+		}
+		else //Player 2 goes first
+		{
+			if (attack(p2, p1))
+			{
+				return;
+			}
+			if (attack(p1, p2))
+			{
+				return;
+			}
+		}
+		round++; //increase the round by 1
+	}
+
+	if (round == 11)
+	{
+		std::cout<< "Both pokemons are still standing. This is a draw!" << "\n";	
+	}
+
+
+
+
+}

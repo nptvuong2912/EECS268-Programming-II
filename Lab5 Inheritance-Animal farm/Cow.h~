@@ -1,0 +1,9 @@
+/**
+*	@file : Cow.h
+*	@author :  Vuong Nguyen
+*	@date : 2015.03.16
+*	Purpose: Header file of Cow Class. 
+*/
+
+#ifndef COW_H
+#define COW_H

@@ -1,0 +1,86 @@
+
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+#include "Node.h"
+#include <iostream>
+
+class LinkedList
+{
+	private:
+	Node* m_front;
+	int m_size;
+	
+	public:
+	/**
+	*  @pre None
+	*  @post Creates and initializes a LinkedList instance
+	*  @return Initialzed LinkedList
+	*/
+	LinkedList(); 
+
+	/**
+	*  @pre None
+	*  @post Method to deletes all the nodes
+	*  @return deleted LinkedList
+	*/
+	~LinkedList(); 
+
+	/**
+	*  @pre none
+	*  @post none
+	*  @return true only if the list is empty
+	*/
+	bool isEmpty() const; 
+
+	/**
+	*  @pre none
+	*  @post none
+	*  @return the number of nodes in the list
+	*/
+	int size() const; 
+
+	/**
+	*  @pre none
+	*  @post none
+	*  @return true only if the value chosen is in the list
+	*/
+	bool search(int value) const; 
+	
+	/**
+	*  @pre none
+	*  @post Print the list and "List empty" if there is no element.
+	*  @return none
+	*/
+	void printList() const; 
+
+	/**
+	*  @pre none
+	*  @post add the new value to the end of the list
+	*  @return none
+	*/
+	void addBack(int value); 
+
+	/**
+	*  @pre none
+	*  @post add the new value to the front of the list
+	*  @return none
+	*/
+	void addFront(int value); 
+
+	/**
+	*  @pre none
+	*  @post removes one element from the back
+	*  @return true if it is successfully removed, false if the list if empty 
+	*/
+	bool removeBack(); 
+	
+	/**
+	*  @pre none
+	*  @post removes one element from the front
+	*  @return true if it is successfully removed, false if the list if empty 
+	*/
+	bool removeFront(); 
+};
+
+#endif
+

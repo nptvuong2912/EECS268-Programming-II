@@ -1,0 +1,219 @@
+/**
+*	@file : MazeWalker.cpp
+*	@author :  Vuong Nguyen
+*	@date : 2015.04.19
+*	Purpose: Implementation file of MazeWalker Class. 
+**/
+
+#include "MazeWalker.h"
+#include <string>
+#include <fstream>
+
+MazeWalker::MazeWalker(char** mazePtr, int startRow, int startCol, int rows, int cols, bool dfs)
+		:m_curPos(startRow, startCol), m_startPos(startRow, startCol)
+{
+	m_maze = mazePtr;
+	m_rows = rows;
+	m_cols = cols;
+
+	//create m_visited array
+
+	m_visited = new bool*[m_rows];	
+	for (int i = 0; i< m_rows; i++)
+	{
+		m_visited[i] = new bool[m_cols];
+	}
+	for (int i=0; i< m_rows; i++)
+	{
+		for(int j=0; j< m_cols; j++)
+		{
+			m_visited[i][j] == false ;
+			
+		}
+	}
+	m_visited[startRow][startCol] = true;
+	m_isDFS = dfs;
+
+}
+
+MazeWalker::~MazeWalker()
+{
+	
+	for(int i =0; i< m_rows; i++)
+	{
+		delete[] m_visited[i];
+	}
+	delete[] m_visited;
+}
+
+void MazeWalker::walkMaze()
+{
+	move(m_startPos);
+		for (int i=0; i< m_rows; i++)
+		{
+			for (int j=0; j< m_cols; j++)
+			{
+				if(m_visited[i][j])
+				{
+					std::cout << "1";
+				
+				}
+				else
+				{
+					std::cout << "0";
+				}
+
+			}
+			std::cout << '\n';
+		}
+		std::cout << "Visiting: " << m_curPos.getRow() << ", " << m_curPos.getCol() << "\n";
+		std::cout << "----------------------------" << '\n';	
+	
+	while(!isGoalReached() )
+	{
+		storeValidMoves();
+		if(m_isDFS)
+		{
+			if(m_moveStack.empty())
+			{
+				std::cout << '\n' << "No Way out!";
+				break;
+			}
+			move(m_moveStack.top());
+			m_moveStack.pop();
+		}
+		else
+		{
+			if(m_moveQueue.empty())
+			{
+				std::cout << '\n' << "No Way out!";
+				break;
+			}
+			move(m_moveQueue.front());
+			m_moveQueue.pop();
+		}
+
+		for (int i=0; i< m_rows; i++)
+		{
+			for (int j=0; j< m_cols; j++)
+			{
+				if(m_visited[i][j])
+				{
+					std::cout << "1";
+				
+				}
+				else
+				{
+					std::cout << "0";
+				}
+
+			}
+			std::cout << '\n';
+		}
+		std::cout << "Visiting: " << m_curPos.getRow() << ", " << m_curPos.getCol() << "\n";
+		std::cout << "----------------------------" << '\n';		
+
+
+	}
+	if (isGoalReached())
+	{
+		std::cout << '\n' << "Exit found!" << '\n';
+
+	}
+	
+		
+}
+
+void MazeWalker::storeValidMoves()
+{
+	int curRow = m_curPos.getRow();
+	int curCol = m_curPos.getCol();
+
+	if (curRow < m_rows - 1) //check down
+	{
+		if (m_maze[curRow + 1][curCol] != 'W' && !m_visited[curRow + 1][curCol])
+		{
+			Position down(curRow + 1, curCol);
+			if (m_isDFS)
+			{
+				m_moveStack.push(down);
+			}
+			else
+			{
+				m_moveQueue.push(down);
+			}
+			
+		}
+	}
+
+	if (curRow > 0) //check up
+	{
+		if (m_maze[curRow - 1][curCol] != 'W' && !m_visited[curRow - 1][curCol])
+		{
+			Position up(curRow - 1, curCol);
+			if (m_isDFS)
+			{
+				m_moveStack.push(up);
+			}
+			else
+			{
+				m_moveQueue.push(up);
+			}
+		}
+	}
+	
+	if (curCol < m_cols - 1) //check right
+	{
+		if (m_maze[curRow][curCol + 1] != 'W' && !m_visited[curRow][curCol + 1])
+		{
+			Position right(curRow, curCol + 1);
+			if (m_isDFS)
+			{
+				m_moveStack.push(right);
+			}
+			else
+			{
+				m_moveQueue.push(right);
+			}
+		}
+	}
+
+	if (curCol > 0) //check left
+	{
+		if (m_maze[curRow][curCol - 1] != 'W' && !m_visited[curRow][curCol - 1])
+		{
+			Position left(curRow, curCol - 1);
+			if (m_isDFS)
+			{
+				m_moveStack.push(left);
+			}
+			else
+			{
+				m_moveQueue.push(left);
+			}
+		}
+	}
+
+}
+
+void MazeWalker::move(Position& p)
+{
+	m_curPos = p;
+	m_visited[p.getRow()][p.getCol()] = true;
+
+}
+
+bool MazeWalker::isGoalReached() const
+{
+	if(m_maze[m_curPos.getRow()][m_curPos.getCol()] == 'E')
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}	
+}
+
+
+

@@ -1,0 +1,12 @@
+Lab03: main.o Node.o DoubleLinkedList.o
+	g++ -g -std=c++11 main.o Node.o DoubleLinkedList.o -o Lab03
+	
+main.o: main.cpp DoubleLinkedList.h DoubleLinkedList.hpp Node.h Node.hpp
+	g++ -g -std=c++11 -c main.cpp
+Node.o: Node.h Node.hpp
+	g++ -g -std=c++11 -c Node.hpp
+DoubleLinkedList.o: DoubleLinkedList.h DoubleLinkedList.hpp
+	g++ -g -std=c++11 -c DoubleLinkedList.hpp
+clean:
+	rm*.o Lab03
+	clean done

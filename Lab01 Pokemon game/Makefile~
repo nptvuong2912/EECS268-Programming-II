@@ -1,0 +1,13 @@
+Lab01: main.o Dice.o Pokemon.o Colosseum.o
+	g++ -g -Wall -o Lab01 main.o Dice.o Pokemon.o Colosseum.o
+main.o: main.cpp Colosseum.h
+	g++ -c -g -Wall main.cpp
+Pokemon: Pokemon.h Pokemon.cpp
+	g++ -c -g -Wall Pokemon.cpp
+Dice.o: Dice.h Dice.cpp
+	g++ -c -g -Wall Dice.cpp
+Colosseum.o: Colosseum.h Colosseum.cpp
+	g++ -c -g -Wall Colosseum.cpp
+clean: 
+	rm*.o Lab01
+	clean done

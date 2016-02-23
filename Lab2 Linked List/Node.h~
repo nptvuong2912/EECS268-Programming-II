@@ -1,0 +1,55 @@
+
+#ifndef NODE_H
+#define NODE_H
+
+#include <string>
+
+class Node
+{
+	private:
+	int m_value;
+	Node* m_next; 
+
+	public:
+	
+	/**
+	*  @pre none
+	*  @post Constructor to create the nodes
+	*  @return none
+	*/
+	Node(); 
+	
+	/**
+	*  @pre None
+	*  @post set the value of the node
+	*  @return none
+	*/
+	void setValue(int value);
+
+	/**
+	*  @pre None
+	*  @post set the m_next pointer
+	*  @return none
+	*/
+	void setNext(Node* prev);
+		
+	
+	
+	/**
+	*  @pre None
+	*  @post None
+	*  @return the value of m_value
+	*/
+	int getValue();
+
+	/**
+	*  @pre None
+	*  @post None
+	*  @return the value of m_next
+	*/
+	Node* getNext();
+
+
+};
+
+#endif

@@ -1,0 +1,130 @@
+/**
+*	@file : Stack.hpp
+*	@author :  Vuong Nguyen
+*	@date : 2015.03.04
+*	Purpose: Implementation file of STack Class. 
+*/
+
+#include <string>
+#include "Node.h"
+
+template <typename T>
+Stack<T>::Stack()
+{
+	m_front = nullptr;
+	m_size = 0;
+}
+
+template <typename T>
+Stack<T>::~Stack()
+{
+	if (!isEmpty())
+	{
+		while (m_front != nullptr)
+		{
+			Node<T>* temp = m_front;
+			m_front = m_front->getNext();
+			delete (temp);
+		}
+		delete(m_front);
+	}
+	else
+	{
+		std::cout << "List is empty.";
+	}
+}
+
+template <typename T>
+bool Stack<T>::isEmpty() const
+{
+	if (m_size == 0)
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
+template <typename T>
+int Stack<T>::size() const
+{
+	return (m_size);
+}
+
+template <typename T>
+void Stack<T>::push(const T newEntry)
+{
+	Node<T>*temp = new Node<T>();
+	temp -> setValue(newEntry);
+
+	if(isEmpty())
+	{
+		m_front = temp;
+		m_size = m_size + 1;
+		
+	}
+	
+	else 
+	{
+		temp -> setNext(m_front);
+		m_front = temp;
+		m_size = m_size + 1;
+	}
+	
+}
+
+template <typename T>
+T Stack<T>::pop() throw (PreconditionViolationException)
+{
+	T value = 0;
+	if (isEmpty()) {
+		throw(PreconditionViolationException("Stack is empty");
+		
+	} 
+	else
+	{
+		Node* temp = m_front;
+		m_front = m_front->getNext();
+		value = temp->getValue();
+		delete (temp);
+		m_size = m_size -1;
+	}
+	return (value);
+}
+
+template <typename T>
+T Stack<T>::peek() throw (PreconditionViolationException)
+{
+	if (isEmpty()) {
+		throw(PreconditionViolationException("Stack is empty");
+		
+	} 
+	else
+	{
+		return (m_front->getValue());
+	}
+}	
+
+template <typename T>
+void Stack<T>::print() const
+{
+	Node<T>* temp = m_front;
+
+	if (isEmpty())
+	{
+		std::cout<< "List Empty" << "\n";
+	}
+	else 
+	{
+		while (temp != nullptr)
+		{
+			std::cout << temp->getValue() << "\n" ;
+			temp = temp->getNext();
+		}
+	}
+}
+
+
+
+
+
